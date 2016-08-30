@@ -6,3 +6,5 @@ lattice
 RColorBrewer
 latticeExtra
 tibble
+tidyr
+ggplot2

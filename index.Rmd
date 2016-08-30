@@ -80,3 +80,25 @@ summary(designs)
 #net outcome is an A average.
 
 ```
+
+###Tidy four measures
+```{r,tidy}
+library(tidyr)
+library(dplyr)
+#gather columns
+measures<-designs %>% gather(evidence, useful, clarity, precise.case, key="measure", value="scores")
+str(measures)
+measures$measure <-as.factor(measures$measure) 
+str(measures)
+
+bwplot(scores~measure, data=measures)
+m2<-glm(scores~measure, family=poisson, data=measures)
+m2
+anova(m2)
+
+library(ggplot2)
+#ggplot quick plot
+qplot(measure, scores, data=measures, geom="boxplot")
+
+```
+

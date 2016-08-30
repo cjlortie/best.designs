@@ -14,7 +14,7 @@ output:
 ##A set of products associated with best experimental design
 
 ###Hypothesis
-Best experimental design can be captured and summarized simply.
+Best experimental design can be captured and summarized simply because we have learned from errors in science (and continue to do so).
 
 ![](./design.jpg)
 
@@ -40,12 +40,43 @@ library(lme4)
 library(lattice)
 library(latticeExtra)
 
+```
+###EDA
+```{r, trends}
+#load grades less identity with order randomized
+designs<-read.csv("expt.design.csv")
+str(designs)
 
-##load functions ####
-error.bar <- function(x, y, upper, lower=upper, length=0,...){
-  if(length(x) != length(y) | length(y) !=length(lower) | length(lower) != length(upper))
-    stop("vectors must be same length")
-  arrows(x,y+upper, x, y-lower, angle=90, code=3, length=0, ...)
-}
-se <- function(x) sd(x)/sqrt(length(x)) ## SE
+#Visualize net outcome ####
+hist(designs$percent, main="percent out of 20 points", xlab="percent")
+
+#Explore type of design summary
+#base-r plot
+plot(percent~expt.design, data=designs)
+
+#lattice plot
+bwplot(percent~expt.design, data = designs, horizontal = FALSE, ylab="percents")
+
+#Looks like no difference (and no power to test between design summary types)
+m1<-glm(percent~expt.design, family=gaussian, data=designs)
+m1
+anova(m1)
+#plot(m1)
+#conclude no difference
+
+#Explore the value of four questions on Likert scale####
+str(designs)
+par(mfrow=c(2,2))
+hist(designs$evidence, main="")
+hist(designs$useful, main="")
+hist(designs$clarity, main="")
+hist(designs$precise.case, main="")
+
+
+
+#net summary
+summary(designs)
+#no difference between measures
+#net outcome is an A average.
+
 ```

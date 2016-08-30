@@ -1,0 +1,8 @@
+base
+dplyr
+Matrix
+lme4
+lattice
+RColorBrewer
+latticeExtra
+tibble
